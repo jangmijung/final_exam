@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+    <title>인공지능의 학습 방식 퀴즈</title>
+    <link href="../Styles/style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            position: relative;
+        }
+        .quiz-container {
+            max-width: 80vw;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 30px 20px 40px 20px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #1976d2;
+        }
+        .quiz-section {
+            margin-bottom: 32px;
+        }
+        .quiz-section h2 {
+            color: #1976d2;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+        }
+        .question {
+            margin-bottom: 24px;
+            padding: 18px 16px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .question-text {
+            font-size: 1.08em;
+            margin-bottom: 12px;
+        }
+        .ox-btns {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 10px;
+        }
+        .ox-btn {
+            flex: 1 1 0;
+            padding: 12px 0;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 6px;
+            background: #e3f2fd;
+            color: #1976d2;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s, color 0.2s;
+        }
+        .ox-btn.selected {
+            background: #1976d2 !important;
+            color: #fff !important;
+            border: 2px solid #0d47a1 !important;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2) !important;
+        }
+        .ox-feedback {
+            margin-top: 8px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .ox-feedback.correct {
+            color: #388e3c;
+        }
+        .ox-feedback.incorrect {
+            color: #d32f2f;
+        }
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .choice-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .choice-input {
+            width: 18px;
+            height: 18px;
+        }
+        .submit-btn {
+            margin-top: 10px;
+            padding: 8px 22px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .submit-btn:active {
+            background: #0d47a1;
+        }
+        .mc-feedback {
+            margin-top: 8px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .mc-feedback.correct {
+            color: #388e3c;
+        }
+        .mc-feedback.incorrect {
+            color: #d32f2f;
+        }
+        @media (max-width: 600px) {
+            .quiz-container {
+                max-width: 90vw;
+                padding: 10px 2vw 20px 2vw;
+            }
+            .question {
+                padding: 12px 6px;
+            }
+            .top-buttons {
+                top: 10px;
+                left: 2vw;
+                gap: 8px;
+                max-width: 96vw;
+            }
+        }
+        .top-buttons-in-main {
+            max-width: 80vw;
+            width: 100%;
+            margin: 20px auto 0 auto;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+        .home-button, .music-btn {
+            white-space: nowrap;
+            position: static;
+        }
+        .home-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+        }
+        .music-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .music-btn:hover {
+            background-color: #45a049;
+        }
+        .music-btn.playing {
+            background-color: #f44336;
+        }
+        .music-btn.playing:hover {
+            background-color: #da190b;
+        }
+        .music-btn.stopped {
+            background-color: #f44336 !important;
+        }
+        .music-btn.stopped:hover {
+            background-color: #da190b !important;
+        }
+        .music-notification {
+            position: fixed;
+            top: 70px;
+            right: calc(10% + 20px);
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: 1px solid #ffeeba;
+            font-size: 14px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #quiz-success-img {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            pointer-events: none;
+        }
+        #quiz-success-img img {
+            max-width: 320px;
+            width: 80vw;
+            height: auto;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #close-btn {
+            position: fixed;
+            bottom: 20px;
+            right: calc(10% + 20px);
+            padding: 12px 24px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        #close-btn:hover {
+            background-color: #d32f2f;
+        }
+        .prev-button {
+            padding: 12px 24px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .prev-button:hover {
+            background-color: #5a6268;
+        }
+        .video-container {
+            max-width: 80%;
+            margin: 0 auto 20px auto;
+            text-align: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        /* 공통 버튼 스타일 */
+        .action-button-common {
+            padding: 12px 24px;
+            color: white;
+            background-color: #1976d2;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .action-button-common:hover {
+            background-color: #1565c0;
+        }
+
+        /* 하단 버튼 컨테이너 */
+        .quiz-footer-buttons {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0 10%;
+            box-sizing: border-box;
+            margin: 30px auto;
+        }
+        .quiz-footer-buttons .action-button-common {
+            margin-right: 10px;
+        }
+        .quiz-footer-buttons .action-button-common:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-buttons-in-main">
+        <a href="ai_learning2.xhtml" class="home-button">홈으로</a>
+        <button class="music-btn" id="music-toggle">🎵 배경음악 재생</button>
+    </div>
+    <div class="quiz-container">
+        <h1 style="text-align:center; color:#1976d2; margin-bottom: 24px;">인공지능의 학습 상식 퀴즈</h1>
+        <div style="text-align:center; margin-bottom: 24px;">
+            <div style="font-size:1.3em; color:#1976d2; font-weight:bold; margin-bottom:8px;">📚 AI 학습 비밀을 마스터했나요?</div>
+            <div style="font-size:1.05em; color:#333;">지금부터 퀴즈를 통해 진짜 AI 도전자가 되어보세요!</div>
+        </div>
+
+        <div class="quiz-section">
+            <div class="question" data-q="1">
+                <div class="question-text">① 지도학습은 정답이 없는 데이터를 가지고 AI가 스스로 학습하는 방법이다.</div>
+                <div class="ox-btns">
+                    <button class="ox-btn" data-value="O">O</button>
+                    <button class="ox-btn" data-value="X">X</button>
+                </div>
+                <div class="ox-feedback" style="display:none;"></div>
+                <div class="ox-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">해설: 지도학습은 정답(label)이 있는 데이터를 보고 학습하는 방식이에요.</div>
+            </div>
+            <div class="question" data-q="2">
+                <div class="question-text">② 비지도학습에서는 정답이 없어도 비슷한 것끼리 AI가 스스로 묶을 수 있다.</div>
+                <div class="ox-btns">
+                    <button class="ox-btn" data-value="O">O</button>
+                    <button class="ox-btn" data-value="X">X</button>
+                </div>
+                <div class="ox-feedback" style="display:none;"></div>
+                <div class="ox-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">해설: 비지도학습은 정답 없이 비슷한 것끼리 AI가 스스로 그룹을 만듭니다.</div>
+            </div>
+            <div class="question" data-q="3">
+                <div class="question-text">③ 강화학습은 보상이나 실패를 반복하면서 AI가 더 나은 행동을 배워가는 방법이다.</div>
+                <div class="ox-btns">
+                    <button class="ox-btn" data-value="O">O</button>
+                    <button class="ox-btn" data-value="X">X</button>
+                </div>
+                <div class="ox-feedback" style="display:none;"></div>
+                <div class="ox-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">해설: 강화학습은 보상과 실패를 반복하며 더 나은 행동을 배우는 방식이에요.</div>
+            </div>
+        </div>
+        <div class="quiz-section">
+            <form id="mc-quiz-form">
+                <div class="question" data-q="4">
+                    <div class="question-text">④ 다음 중 지도학습의 예시로 가장 알맞은 것은?</div>
+                    <div class="choices">
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q4" value="1" />신발을 비슷한 모양끼리 묶는 것</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q4" value="2" />과일 그림을 보고 이름을 맞히는 것</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q4" value="3" />로봇이 미로를 빠져나가면서 보상을 받는 것</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q4" value="4" />AI가 스스로 숫자 패턴을 찾아내는 것</label>
+                    </div>
+                    <div class="mc-feedback" style="display:none;"></div>
+                    <div class="mc-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">정답: 과일 그림을 보고 이름을 맞히는 것이 지도학습의 대표적인 예시입니다.</div>
+                </div>
+                <div class="question" data-q="5">
+                    <div class="question-text">⑤ 강화학습에 해당하는 활동은 무엇인가요?</div>
+                    <div class="choices">
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q5" value="1" />과일 분류 카드 게임</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q5" value="2" />신발을 용도별로 나누기</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q5" value="3" />로봇이 미로를 빠져나가는 게임</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q5" value="4" />같은 색깔 스티커를 분류하는 활동</label>
+                    </div>
+                    <div class="mc-feedback" style="display:none;"></div>
+                    <div class="mc-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">정답: 로봇이 미로를 빠져나가는 게임이 강화학습의 예시입니다.</div>
+                </div>
+                <div class="question" data-q="6">
+                    <div class="question-text">⑥ 비지도학습의 특징으로 올바른 것은?</div>
+                    <div class="choices">
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q6" value="1" />AI가 정답을 보고 배운다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q6" value="2" />AI가 정답 없이 스스로 비슷한 걸 묶는다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q6" value="3" />AI가 보상을 받으며 배우는 방식이다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q6" value="4" />사람의 감정을 인식하는 기술이다</label>
+                    </div>
+                    <div class="mc-feedback" style="display:none;"></div>
+                    <div class="mc-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">정답: AI가 정답 없이 스스로 비슷한 걸 묶는 것이 비지도학습의 특징입니다.</div>
+                </div>
+                <div class="question" data-q="7">
+                    <div class="question-text">⑦ 딥러닝에서 '입력층'은 어떤 역할을 하나요?</div>
+                    <div class="choices">
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q7" value="1" />이미지를 처음 받아들이는 단계</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q7" value="2" />판단 결과를 출력하는 단계</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q7" value="3" />사람의 지시 없이 스스로 분류하는 단계</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q7" value="4" />보상과 실패를 통해 학습하는 단계</label>
+                    </div>
+                    <div class="mc-feedback" style="display:none;"></div>
+                    <div class="mc-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">정답: 입력층은 이미지나 데이터를 처음 받아들이는 단계입니다.</div>
+                </div>
+                <div class="question" data-q="8">
+                    <div class="question-text">⑧ 은닉층에서 일어나는 일로 가장 알맞은 것은?</div>
+                    <div class="choices">
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q8" value="1" />바로 정답을 출력한다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q8" value="2" />결과에 따라 점수를 준다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q8" value="3" />이미지의 특징을 분석하고 학습한다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q8" value="4" />사람이 정해준 규칙만 따라간다</label>
+                    </div>
+                    <div class="mc-feedback" style="display:none;"></div>
+                    <div class="mc-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">정답: 은닉층은 이미지의 특징을 분석하고 학습하는 역할을 합니다.</div>
+                </div>
+                <div class="question" data-q="9">
+                    <div class="question-text">⑨ 다음 중 딥러닝의 '출력층'에서 일어나는 일은 무엇인가요?</div>
+                    <div class="choices">
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q9" value="1" />이미지 속 픽셀을 저장한다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q9" value="2" />AI가 분석한 결과를 최종 판단으로 보여준다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q9" value="3" />데이터끼리 비슷한 것끼리 묶는다</label>
+                        <label class="choice-label"><input class="choice-input" type="radio" name="q9" value="4" />입력값을 무작위로 선택한다</label>
+                    </div>
+                    <div class="mc-feedback" style="display:none;"></div>
+                    <div class="mc-explanation" style="display:none; font-size:0.97em; color:#555; margin-top:4px;">정답: 출력층은 AI가 분석한 결과를 최종 판단으로 보여주는 역할을 합니다.</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="quiz-footer-buttons">
+        <a href="ai_learning6.xhtml" style="display:inline-block; padding:12px 32px; background:#95a5a6; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;"> &#8592;이전</a>
+        <div style="flex-grow: 1;"></div>
+        <button id="check-quiz-btn" class="action-button-common">확인하기</button>
+        <button id="reset-quiz-btn" class="action-button-common">다시 도전하기</button>
+        <div style="flex-grow: 1;"></div>
+    </div>
+
+    <div id="quiz-success-img">
+        <img src="../Images/quiz_sucess1.png" alt="퀴즈 성공" />
+    </div>
+    <button id="close-btn">종료하기</button>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var bgMusic = new Audio('../Audio/Sounds/bg.wav');
+        bgMusic.loop = true;
+        var isPlaying = false;
+        var musicBtn = document.getElementById('music-toggle');
+        var firstClick = true;
+
+        // 버튼 토글
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                isPlaying = false;
+                musicBtn.textContent = '⏸️ 배경음악 정지';
+                musicBtn.classList.add('stopped');
+            } else {
+                bgMusic.play();
+                isPlaying = true;
+                musicBtn.textContent = '🎵 배경음악 재생';
+                musicBtn.classList.remove('stopped');
+            }
+        });
+
+        // 화면 아무 곳이나 클릭 시 최초 1회 자동 재생
+        document.addEventListener('click', function() {
+            if (firstClick) {
+                bgMusic.play();
+                isPlaying = true;
+                musicBtn.textContent = '🎵 배경음악 재생';
+                musicBtn.classList.remove('stopped');
+                firstClick = false;
+            }
+        }, { once: true });
+
+        // 1~3번 OX 문제: 클릭 시 선택 표시만, 피드백/해설은 숨김 (항상 적용)
+        var oxQuestions = document.querySelectorAll('.quiz-section .question[data-q]');
+        oxQuestions.forEach(function(qBox, idx) {
+            if (idx > 2) return; // 1,2,3번 문제만 적용
+            var btns = qBox.querySelectorAll('.ox-btn');
+            btns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    btns.forEach(function(b) { b.classList.remove('selected'); });
+                    btn.classList.add('selected');
+                });
+            });
+        });
+
+        // 확인하기 버튼 클릭 시 1~9번 답 체크 및 피드백/해설 표시 (오답은 해설 숨김)
+        document.getElementById('check-quiz-btn').addEventListener('click', function() {
+            // 1~3번 OX 문제
+            var oxAnswers = ['X', 'O', 'O'];
+            var oxQuestions = document.querySelectorAll('.quiz-section .question[data-q]');
+            var allCorrect = true;
+            oxQuestions.forEach(function(qBox, idx) {
+                if (idx > 2) return;
+                var btns = qBox.querySelectorAll('.ox-btn');
+                var feedback = qBox.querySelector('.ox-feedback');
+                var explanation = qBox.querySelector('.ox-explanation');
+                var selectedBtn = Array.from(btns).find(function(btn) { return btn.classList.contains('selected'); });
+                if (!selectedBtn) {
+                    allCorrect = false;
+                    feedback.textContent = '답을 선택해주세요!';
+                    feedback.className = 'ox-feedback incorrect';
+                    feedback.style.display = 'block';
+                    explanation.style.display = 'none';
+                    return;
+                }
+                var userAns = selectedBtn.getAttribute('data-value');
+                var isCorrect = (userAns === oxAnswers[idx]);
+                if (!isCorrect) allCorrect = false;
+                feedback.textContent = isCorrect ? '정답입니다!' : '오답입니다!';
+                feedback.className = 'ox-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                feedback.style.display = 'block';
+                explanation.style.display = isCorrect ? 'block' : 'none';
+            });
+
+            // 4~9번 객관식 문제
+            var mcAnswers = ['2', '3', '2', '1', '3', '2'];
+            var mcQuestions = document.querySelectorAll('#mc-quiz-form .question[data-q]');
+            mcQuestions.forEach(function(qBox, idx) {
+                var radios = qBox.querySelectorAll('input[type="radio"]');
+                var feedback = qBox.querySelector('.mc-feedback');
+                var explanation = qBox.querySelector('.mc-explanation');
+                var checkedRadio = Array.from(radios).find(function(radio) { return radio.checked; });
+                if (!checkedRadio) {
+                    allCorrect = false;
+                    feedback.textContent = '답을 선택해주세요!';
+                    feedback.className = 'mc-feedback incorrect';
+                    feedback.style.display = 'block';
+                    explanation.style.display = 'none';
+                    return;
+                }
+                var userAns = checkedRadio.value;
+                var isCorrect = (userAns === mcAnswers[idx]);
+                if (!isCorrect) allCorrect = false;
+                feedback.textContent = isCorrect ? '정답입니다!' : '오답입니다!';
+                feedback.className = 'mc-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                feedback.style.display = 'block';
+                explanation.style.display = isCorrect ? 'block' : 'none';
+            });
+
+            // 모두 정답이면 성공 이미지와 효과음
+            if (allCorrect) {
+                var successImg = document.getElementById('quiz-success-img');
+                if (successImg) successImg.style.display = 'block';
+                var successAudio = new Audio('../Audio/Sounds/sucess3.wav');
+                successAudio.play();
+            }
+        });
+
+        document.getElementById('reset-quiz-btn').addEventListener('click', function() {
+            window.location.reload();
+        });
+    });
+    </script>
+</body>
+</html> 

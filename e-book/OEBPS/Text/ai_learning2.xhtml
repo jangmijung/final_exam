@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+    <title>인공지능의 학습 방식</title>
+    <link href="../Styles/style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        h1, h2, h3, h4 {
+            text-align: left;
+            margin-left: 0;
+        }
+        .learning-goals, .main-content, .learning-method, .method-content, .method-text, .comparison {
+            text-align: left;
+            margin-left: 0;
+        }
+        .learning-goals, .main-content {
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        .method-image {
+            text-align: left;
+        }
+        .method-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        .image-caption {
+            text-align: left;
+            margin-left: 0;
+        }
+        .comparison-table {
+            width: 100%;
+            margin-left: 0;
+        }
+        h1, .learning-goals, .main-content {
+            max-width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:left;">인공지능의 학습 방식</h1>
+    
+    <section class="learning-goals" style="text-align:left;">
+        <h2>학습목표</h2>
+        <ul>
+            <li>머신러닝의 대표적인 학습 방법인 지도학습, 비지도학습, 강화학습, 딥러닝의 개념과 특징을 설명할 수 있다.</li>
+            <li>지도학습, 비지도학습, 강화학습의 차이점을 활동을 통해 비교하고 구별할 수 있다.</li>
+            <li>각 학습 방법을 체험하는 반응형 활동에 참여하여 AI 학습의 원리를 이해할 수 있다.</li>
+        </ul>
+    </section>
+
+    <section class="main-content" style="text-align:left;">
+        <h2>1. 머신러닝의 학습 방법</h2>
+        
+        <div class="learning-method" style="text-align:left;">
+            <h3>1.1 지도 학습 (Supervised Learning)</h3>
+            <div class="method-content">
+                <div class="method-text">
+                    <p>지도 학습은 정답이 있는 데이터를 사용하여 학습하는 방법입니다. 마치 선생님이 학생에게 문제와 답을 함께 가르치는 것과 같습니다.</p>
+                    <h4>주요 특징:</h4>
+                    <ul>
+                        <li>입력 데이터와 정답(레이블)이 쌍으로 존재</li>
+                        <li>분류와 회귀 문제 해결에 사용</li>
+                        <li>예측의 정확도가 높음</li>
+                    </ul>
+                    <h4>실생활 예시:</h4>
+                    <ul>
+                        <li>이메일 스팸 필터링</li>
+                        <li>손글씨 인식</li>
+                        <li>날씨 예측</li>
+                    </ul>
+                </div>
+                <div class="method-image">
+                    <img src="../Images/supervised_learning.jpg" alt="지도 학습 개념도" />
+                    <p class="image-caption">지도 학습의 작동 원리</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="learning-method" style="text-align:left;">
+            <h3>1.2 비지도 학습 (Unsupervised Learning)</h3>
+            <div class="method-content">
+                <div class="method-text">
+                    <p>비지도 학습은 정답 없이 데이터의 패턴을 찾아내는 학습 방법입니다. 마치 아이가 스스로 물건들을 비슷한 것끼리 분류하는 것과 같습니다.</p>
+                    <h4>주요 특징:</h4>
+                    <ul>
+                        <li>정답(레이블) 없이 학습</li>
+                        <li>데이터의 숨겨진 패턴 발견</li>
+                        <li>군집화와 차원 축소에 사용</li>
+                    </ul>
+                    <h4>실생활 예시:</h4>
+                    <ul>
+                        <li>고객 그룹 분류</li>
+                        <li>이상 징후 탐지</li>
+                        <li>추천 시스템</li>
+                    </ul>
+                </div>
+                <div class="method-image">
+                    <img src="../Images/unsupervised_learning.jpg" alt="비지도 학습 개념도" />
+                    <p class="image-caption">비지도 학습의 군집화 예시</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="learning-method" style="text-align:left;">
+            <h3>1.3 강화 학습 (Reinforcement Learning)</h3>
+            <div class="method-content">
+                <div class="method-text">
+                    <p>강화 학습은 시행착오를 통해 학습하는 방법입니다. 마치 게임을 하면서 점수를 얻고 패널티를 받으며 배우는 것과 같습니다.</p>
+                    <h4>주요 특징:</h4>
+                    <ul>
+                        <li>환경과의 상호작용을 통한 학습</li>
+                        <li>보상과 패널티를 통한 학습</li>
+                        <li>최적의 행동 정책을 찾는 것이 목표</li>
+                    </ul>
+                    <h4>실생활 예시:</h4>
+                    <ul>
+                        <li>게임 AI</li>
+                        <li>로봇 제어</li>
+                        <li>자율주행 자동차</li>
+                    </ul>
+                </div>
+                <div class="method-image">
+                    <img src="../Images/reinforcement_learning.jpg" alt="강화 학습 개념도" />
+                    <p class="image-caption">강화 학습의 작동 원리</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align:left;">2. 딥러닝 (Deep Learning)</h2>
+        <div class="learning-method" style="text-align:left;">
+            <div class="method-content">
+                <div class="method-text">
+                    <p>딥러닝은 인공신경망을 여러 층으로 쌓아 복잡한 패턴을 학습하는 기술입니다. 마치 인간의 뇌가 여러 뉴런을 통해 정보를 처리하는 것과 같습니다.</p>
+                    <h4>주요 특징:</h4>
+                    <ul>
+                        <li>여러 층의 인공신경망 사용</li>
+                        <li>복잡한 패턴 학습 가능</li>
+                        <li>대량의 데이터 필요</li>
+                        <li>높은 컴퓨팅 파워 요구</li>
+                    </ul>
+                    <h4>주요 신경망 유형:</h4>
+                    <ul>
+                        <li>CNN (합성곱 신경망): 이미지 처리</li>
+                        <li>RNN (순환 신경망): 시계열 데이터 처리</li>
+                        <li>Transformer: 자연어 처리</li>
+                    </ul>
+                </div>
+                <div class="method-image">
+                    <img src="../Images/deep_learning.jpg" alt="딥러닝 개념도" />
+                    <p class="image-caption">딥러닝의 신경망 구조</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="comparison" style="text-align:left;">
+            <h2>학습 방식 비교</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>학습 방식</th>
+                        <th>데이터 필요성</th>
+                        <th>적용 분야</th>
+                        <th>장점</th>
+                        <th>단점</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>지도 학습</td>
+                        <td>레이블된 데이터</td>
+                        <td>분류, 회귀</td>
+                        <td>정확한 예측</td>
+                        <td>레이블 데이터 필요</td>
+                    </tr>
+                    <tr>
+                        <td>비지도 학습</td>
+                        <td>레이블 없는 데이터</td>
+                        <td>군집화, 차원축소</td>
+                        <td>패턴 발견</td>
+                        <td>정확도 평가 어려움</td>
+                    </tr>
+                    <tr>
+                        <td>강화 학습</td>
+                        <td>환경 상호작용</td>
+                        <td>게임, 로봇제어</td>
+                        <td>복잡한 의사결정</td>
+                        <td>학습 시간 오래 걸림</td>
+                    </tr>
+                    <tr>
+                        <td>딥러닝</td>
+                        <td>대량의 데이터</td>
+                        <td>이미지, 음성, 자연어</td>
+                        <td>복잡한 패턴 학습</td>
+                        <td>많은 자원 필요</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align:right; margin-top:20px;">
+                <a href="ai_learning3.xhtml" style="display:inline-block; padding:12px 32px; background:#3498db; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;">다음 &#8594;</a>
+            </div>
+        </section>
+    </section>
+</body>
+</html> 

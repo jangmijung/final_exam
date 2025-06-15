@@ -1,0 +1,410 @@
+/* 기본 스타일 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #2980b9;
+    margin-top: 30px;
+}
+
+h3 {
+    color: #34495e;
+    margin-top: 25px;
+}
+
+/* 섹션 스타일 */
+.chapter-intro {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 박스 스타일 */
+.example-box, .case-study, .ethics-section {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 목록 스타일 */
+ul, ol {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* 활동 섹션 */
+.activity {
+    background-color: #e8f4f8;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.activity h2 {
+    color: #2c3e50;
+}
+
+/* 정리하기 섹션 */
+.summary {
+    background-color: #f1f8e9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 40px;
+}
+
+.summary h2 {
+    color: #2c3e50;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .main-content {
+        padding: 0 10px;
+    }
+}
+
+/* 강조 텍스트 */
+strong {
+    color: #e74c3c;
+}
+
+/* 링크 스타일 */
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+}
+
+/* 이미지 스타일 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+/* 코드 블록 스타일 */
+pre {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: 'Consolas', monospace;
+    background-color: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* 학습 방식 페이지 스타일 */
+.learning-method {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.method-content {
+    display: flex;
+    gap: 2.5px;
+    margin-top: 20px;
+}
+
+.method-text {
+    flex: 1;
+}
+
+.method-image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.method-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.image-caption {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+}
+
+.comparison-table {
+    width: 100%;
+    margin: 30px 0;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.comparison-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.comparison-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.comparison-table tr:hover {
+    background-color: #f1f8e9;
+}
+
+.activity-content {
+    background-color: #e8f4f8;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.activity-content h3 {
+    color: #2c3e50;
+    margin-top: 20px;
+}
+
+.activity-content p {
+    margin: 10px 0;
+}
+
+/* 반응형 디자인 추가 */
+@media (max-width: 768px) {
+    .method-content {
+        flex-direction: column;
+    }
+    
+    .method-image {
+        margin-top: 20px;
+    }
+    
+    .comparison-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* AI 학습 체험 페이지 스타일 */
+.intro-section {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.intro-text {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #2c3e50;
+}
+
+.learning-type {
+    margin: 40px 0;
+    padding: 25px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.learning-type h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.type-description {
+    font-size: 1.1em;
+    color: #34495e;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.activity-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 25px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.activity-card h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+.activity-content {
+    display: flex;
+    gap: 30px;
+}
+
+.activity-description {
+    flex: 2;
+}
+
+.activity-image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.activity-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.activity-steps, .materials {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.activity-steps h5, .materials h5 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.activity-steps ol, .materials ul {
+    margin-left: 20px;
+}
+
+.activity-steps li, .materials li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.learning-tip {
+    background-color: #e8f4f8;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 40px;
+}
+
+.tip-content {
+    margin-top: 15px;
+}
+
+.tip-content p {
+    font-size: 1.2em;
+    color: #2c3e50;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.tip-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.tip-content li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.tip-content li:before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+}
+
+/* 학습 유형별 색상 구분 */
+.supervised {
+    border-left: 5px solid #3498db;
+}
+
+.unsupervised {
+    border-left: 5px solid #2ecc71;
+}
+
+.reinforcement {
+    border-left: 5px solid #e67e22;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .activity-content {
+        flex-direction: column;
+    }
+    
+    .activity-image {
+        margin-top: 20px;
+    }
+    
+    .learning-type {
+        padding: 15px;
+    }
+    
+    .activity-card {
+        padding: 15px;
+    }
+} 

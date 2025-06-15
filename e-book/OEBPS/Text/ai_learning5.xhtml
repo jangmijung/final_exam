@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+    <title>강화학습 체험하기</title>
+    <link href="../Styles/style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            padding: 0;
+            max-width: 80%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        h1 {
+            max-width: 100%;
+            margin: 20px auto 0 auto;
+            box-sizing: border-box;
+        }
+        .intro-section {
+            max-width: 100%;
+            margin: 2px auto 30px auto;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .learning-experience {
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .navigation-buttons {
+            max-width: 100%;
+            margin: 40px auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        .maze-game {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .maze-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px;
+            background-color: #ddd;
+            padding: 2px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .maze-cell {
+            background-color: #fff;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: default;
+            user-select: none;
+            position: relative;
+        }
+
+        .maze-cell.wall {
+            background-color: #666;
+        }
+
+        .maze-cell.robot {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .maze-cell.cheese {
+            background-color: #FFD700;
+        }
+
+        .maze-cell.robot::before {
+            content: "🤖";
+            font-size: 1.5em;
+        }
+
+        .maze-cell.cheese::before {
+            content: "🧀";
+            font-size: 1.5em;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .direction-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 150px;
+            margin: 0 auto;
+        }
+
+        .direction-btn {
+            padding: 15px;
+            font-size: 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .direction-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .direction-btn:active {
+            transform: scale(0.95);
+        }
+
+        .direction-btn.up { grid-column: 2; }
+        .direction-btn.down { grid-column: 2; grid-row: 3; }
+        .direction-btn.left { grid-column: 1; grid-row: 2; }
+        .direction-btn.right { grid-column: 3; grid-row: 2; }
+
+        .game-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+            margin: 10px 0;
+        }
+
+        .game-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .game-message.fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .reset-btn {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+        }
+
+        .reset-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .game-instructions {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .game-instructions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .game-instructions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .game-instructions li {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .maze-game {
+                padding: 10px;
+            }
+
+            .maze-grid {
+                max-width: 100%;
+            }
+
+            .direction-btn {
+                padding: 12px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .maze-cell {
+                font-size: 20px;
+            }
+
+            .direction-btn {
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+
+        .question-examples {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+        .question-examples h2 {
+            font-size: 1.15em;
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .question-examples ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .question-examples li {
+            margin-bottom: 12px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .question-examples strong {
+            color: #0d47a1;
+        }
+        .show-answer-btn {
+            margin-top: 8px;
+            padding: 4px 14px;
+            font-size: 0.95em;
+            background-color: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .show-answer-btn:active {
+            background-color: #0d47a1;
+        }
+        .hidden-answer {
+            margin-left: 8px;
+            color: #333;
+        }
+        .answer-bold {
+            font-weight: bold;
+        }
+        .learning-goals {
+            background-color: #f5f5f5;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            margin: 30px 0 20px 0;
+            border-radius: 8px;
+        }
+        .learning-goals h2 {
+            font-size: 1.15em;
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .learning-goals ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .learning-goals li {
+            margin-bottom: 12px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .learning-tip {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 10%;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <a href="ai_learning2.xhtml" class="home-button">홈으로</a>
+    <h1>강화학습 체험하기</h1>
+    
+    <section class="intro-section">
+        <p class="intro-text">이 페이지에서는 강화학습의 원리를 직접 체험해볼 수 있습니다. 
+        로봇이 미로를 탐색하며 목표(치즈)에 도달하는 과정을 통해 강화학습의 특징을 이해해보세요!</p>
+    </section>
+
+    <section class="learning-experience">
+        <div class="learning-type reinforcement">
+            <h2>🟦 강화학습 (보상을 통해 배워요!)</h2>
+            <p class="type-description">강화학습은 보상을 통해 학습하는 방법입니다. 
+            AI가 행동의 결과로 얻는 보상을 바탕으로 최적의 행동을 찾아갑니다.</p>
+
+            <div class="activity-card">
+                <h3>🤖 미로 탈출하기</h3>
+                <div class="activity-content">
+                    <div class="activity-description">
+                        <h4>🎯 설명</h4>
+                        <p>로봇을 조작하여 미로를 통과해 치즈에 도달해보세요.</p>
+                        
+                        <div class="game-instructions">
+                            <h3>게임 방법</h3>
+                            <ul>
+                                <li>방향 버튼(↑ ↓ ← →)을 사용하여 로봇을 움직이세요.</li>
+                                <li>모바일에서는 화면을 터치하여 로봇을 조작할 수 있습니다.</li>
+                                <li>벽에 부딪히면 실패하고 다시 시작해야 합니다.</li>
+                                <li>치즈에 도달하면 성공하고 보상을 받습니다!</li>
+                            </ul>
+                        </div>
+
+                        <div class="maze-game">
+                            <div class="game-container">
+                                <div class="maze-grid" id="maze-grid">
+                                    <!-- 미로 그리드는 JavaScript로 동적 생성됩니다 -->
+                                </div>
+
+                                <div class="controls">
+                                    <div class="direction-buttons">
+                                        <button class="direction-btn up" data-direction="up">↑</button>
+                                        <button class="direction-btn left" data-direction="left">←</button>
+                                        <button class="direction-btn right" data-direction="right">→</button>
+                                        <button class="direction-btn down" data-direction="down">↓</button>
+                                    </div>
+                                </div>
+
+                                <div id="game-message" class="game-message"></div>
+                                <button id="reset-btn" class="reset-btn">다시 시작하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-examples">
+            <h2>🎯 생각해볼까요?</h2>
+            <ul>
+                <li>
+                    <strong>"여러분, 처음엔 어디로 가야 할지 몰랐지만, 몇 번 하다 보니 길이 보였죠?"</strong><br />
+                    <button id="show-answer-btn1" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer1" class="hidden-answer answer-bold" style="display:none;">→ AI도 처음엔 몰라요. 하지만 보상을 받으면서 배워요.</span>
+                </li>
+                <li>
+                    <strong>"실패했을 때 다시 시도했나요?"</strong><br />
+                    <button id="show-answer-btn2" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer2" class="hidden-answer answer-bold" style="display:none;">→ 그게 바로 강화학습이에요. 실패를 통해 학습해요.</span>
+                </li>
+                <li>
+                    <strong>"정답길로 갔을 때 어떤 메시지를 받았나요?"</strong><br />
+                    <button id="show-answer-btn3" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer3" class="hidden-answer answer-bold" style="display:none;">→ AI도 좋은 행동을 하면 '보상'을 받는 거예요.</span>
+                </li>
+            </ul>
+        </div>
+
+        <section class="learning-tip">
+            <h2>📌 TIP</h2>
+            <div class="tip-content">
+                <p>"강화학습은 시행착오를 통해 최적의 행동을 찾아가는 AI의 학습 방법이에요!"</p>
+                <ul>
+                    <li>보상을 통해 좋은 행동과 나쁜 행동을 구분해요.</li>
+                    <li>실패를 통해 더 나은 방법을 찾아가요.</li>
+                    <li>목표에 도달하는 다양한 방법을 시도해보세요.</li>
+                </ul>
+            </div>
+        </section>
+    </section>
+
+    <div class="navigation-buttons">
+        <a href="ai_learning4.xhtml" style="display:inline-block; padding:12px 32px; background:#95a5a6; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;"> &#8592;이전</a>
+        <a href="ai_learning6.xhtml" style="display:inline-block; padding:12px 32px; background:#3498db; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;">다음 &#8594;</a>
+    </div>
+
+    <script>
+        //<![CDATA[
+        document.addEventListener('DOMContentLoaded', function() {
+            // 오디오 요소 생성
+            const sounds = {
+                success: new Audio('../Audio/Sounds/perfect.wav'),
+                fail: new Audio('../Audio/Sounds/error.wav')
+            };
+
+            // 오디오 볼륨 설정
+            sounds.success.volume = 0.7;
+            sounds.fail.volume = 0.7;
+
+            // 오디오 로드 확인
+            sounds.success.addEventListener('error', (e) => {
+                console.error('Success sound failed to load:', e);
+            });
+            sounds.fail.addEventListener('error', (e) => {
+                console.error('Fail sound failed to load:', e);
+            });
+
+            // 미로 크기 설정
+            const GRID_SIZE = 5;
+            
+            // 미로 맵 정의 (0: 이동 가능, 1: 벽, 2: 시작점, 3: 도착점)
+            const mazeMap = [
+                [0, 1, 1, 0, 3],
+                [0, 1, 0, 0, 0],
+                [2, 0, 0, 1, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0]
+            ];
+
+            let robotPosition = { x: 0, y: 2 }; // 로봇의 초기 위치 (2,0)
+            let gameActive = true;
+
+            // 미로 그리드 생성
+            function createMazeGrid() {
+                const grid = document.getElementById('maze-grid');
+                grid.innerHTML = '';
+
+                for (let y = 0; y < GRID_SIZE; y++) {
+                    for (let x = 0; x < GRID_SIZE; x++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'maze-cell';
+                        
+                        if (mazeMap[y][x] === 1) {
+                            cell.classList.add('wall');
+                        } else if (mazeMap[y][x] === 3) {
+                            cell.classList.add('cheese');
+                        }
+                        
+                        grid.appendChild(cell);
+                    }
+                }
+                updateRobotPosition();
+            }
+
+            // 로봇 위치 업데이트
+            function updateRobotPosition() {
+                const cells = document.querySelectorAll('.maze-cell');
+                cells.forEach(cell => cell.classList.remove('robot'));
+
+                const index = robotPosition.y * GRID_SIZE + robotPosition.x;
+                cells[index].classList.add('robot');
+            }
+
+            // 게임 메시지 표시
+            function showMessage(message, isSuccess) {
+                const messageElement = document.getElementById('game-message');
+                messageElement.textContent = message;
+                messageElement.className = `game-message ${isSuccess ? 'success' : 'fail'}`;
+                document.getElementById('reset-btn').style.display = 'block';
+            }
+
+            // 효과음 재생
+            function playSound(soundType) {
+                const sound = sounds[soundType];
+                if (sound) {
+                    sound.currentTime = 0;
+                    sound.play().catch(error => console.error('Sound playback failed:', error));
+                }
+            }
+
+            // 로봇 이동 처리
+            function moveRobot(direction) {
+                if (!gameActive) return;
+
+                let newX = robotPosition.x;
+                let newY = robotPosition.y;
+
+                switch (direction) {
+                    case 'up': newY--; break;
+                    case 'down': newY++; break;
+                    case 'left': newX--; break;
+                    case 'right': newX++; break;
+                }
+
+                // 이동 가능 여부 확인
+                if (newX < 0 || newX >= GRID_SIZE || newY < 0 || newY >= GRID_SIZE || mazeMap[newY][newX] === 1) {
+                    showMessage('실패! 다시 시도해보세요.', false);
+                    playSound('fail');
+                    gameActive = false;
+                    return;
+                }
+
+                // 로봇 위치 업데이트
+                robotPosition.x = newX;
+                robotPosition.y = newY;
+                updateRobotPosition();
+
+                // 도착점 확인
+                if (mazeMap[newY][newX] === 3) {
+                    showMessage('성공! 보상 획득!', true);
+                    playSound('success');
+                    gameActive = false;
+                }
+            }
+
+            // 게임 초기화
+            function resetGame() {
+                robotPosition = { x: 0, y: 2 };
+                gameActive = true;
+                document.getElementById('game-message').className = 'game-message';
+                document.getElementById('reset-btn').style.display = 'none';
+                createMazeGrid();
+            }
+
+            // 이벤트 리스너 설정
+            document.querySelectorAll('.direction-btn').forEach(button => {
+                button.addEventListener('click', () => moveRobot(button.dataset.direction));
+            });
+
+            // 키보드 이벤트
+            document.addEventListener('keydown', (e) => {
+                if (!gameActive) return;
+                
+                switch (e.key) {
+                    case 'ArrowUp': moveRobot('up'); break;
+                    case 'ArrowDown': moveRobot('down'); break;
+                    case 'ArrowLeft': moveRobot('left'); break;
+                    case 'ArrowRight': moveRobot('right'); break;
+                }
+            });
+
+            // 터치 이벤트
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                if (!gameActive) return;
+
+                const touchEndX = e.changedTouches[0].clientX;
+                const touchEndY = e.changedTouches[0].clientY;
+
+                const diffX = touchEndX - touchStartX;
+                const diffY = touchEndY - touchStartY;
+
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    moveRobot(diffX > 0 ? 'right' : 'left');
+                } else {
+                    moveRobot(diffY > 0 ? 'down' : 'up');
+                }
+            });
+
+            // 리셋 버튼 이벤트
+            document.getElementById('reset-btn').addEventListener('click', resetGame);
+
+            // 게임 초기화
+            resetGame();
+
+            // 답변 보기 버튼 기능
+            for (var i = 1; i <= 3; i++) {
+                var showBtn = document.getElementById('show-answer-btn' + i);
+                var answer = document.getElementById('hidden-answer' + i);
+                if (showBtn && answer) {
+                    showBtn.addEventListener('click', (function(btn, ans) {
+                        return function() {
+                            btn.style.display = 'none';
+                            ans.style.display = 'inline';
+                        };
+                    })(showBtn, answer));
+                }
+            }
+        });
+        //]]>
+    </script>
+</body>
+</html> 

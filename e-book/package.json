@@ -1,0 +1,12 @@
+{
+  "name": "epub-preview",
+  "version": "1.0.0",
+  "description": "EPUB Preview Project",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server"
+  },
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+} 

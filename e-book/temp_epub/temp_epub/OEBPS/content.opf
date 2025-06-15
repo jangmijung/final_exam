@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="BookId" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
+   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+      <dc:identifier id="BookId">urn:uuid:12345678-1234-1234-1234-123456789012</dc:identifier>
+      <dc:title>중학교 정보교과서 - 인공지능과 학습</dc:title>
+      <dc:creator>건국대학교</dc:creator>
+      <dc:language>ko</dc:language>
+      <dc:date>2024-03-19</dc:date>
+      <meta property="dcterms:modified">2024-03-19T12:00:00Z</meta>
+      <meta property="rendition:layout">reflowable</meta>
+      <meta property="rendition:orientation">auto</meta>
+      <meta property="rendition:spread">auto</meta>
+   </metadata>
+   <manifest>
+      <!-- Navigation -->
+      <item id="nav" href="Text/nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+      <item id="toc" href="Text/toc.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+
+         
+      <!-- Content -->
+      <item id="ai-learning2" href="Text/ai_learning2.xhtml" media-type="application/xhtml+xml"/>
+      <item id="ai-learning3" href="Text/ai_learning3.xhtml" media-type="application/xhtml+xml"/>
+      <item id="ai-learning4" href="Text/ai_learning4.xhtml" media-type="application/xhtml+xml"/>
+      <item id="ai-learning5" href="Text/ai_learning5.xhtml" media-type="application/xhtml+xml"/>
+      <item id="ai-learning6" href="Text/ai_learning6.xhtml" media-type="application/xhtml+xml"/>
+      <item id="ai-learning7" href="Text/ai_learning7.xhtml" media-type="application/xhtml+xml"/>
+      
+      <!-- Styles -->
+      <item id="style1" href="Styles/style1.css" media-type="text/css"/>
+      <item id="style-main" href="Styles/style.css" media-type="text/css"/>
+      <item id="sgc-nav" href="Styles/sgc-nav.css" media-type="text/css"/>
+      
+      <!-- Scripts -->
+      <item id="script-main" href="Scripts/script.js" media-type="application/javascript"/>
+
+      <!-- Audio -->
+      <item id="fail-audio" href="Audio/Sounds/fail.wav" media-type="audio/wav"/>
+      <item id="perfect-audio" href="Audio/Sounds/perfect.wav" media-type="audio/wav"/>
+      <item id="sucess-audio" href="Audio/Sounds/sucess.wav" media-type="audio/wav"/>
+      <item id="sucess3-audio" href="Audio/Sounds/sucess3.wav" media-type="audio/wav"/>
+      <item id="error-audio" href="Audio/Sounds/error.wav" media-type="audio/wav"/>
+      <item id="bg-audio" href="Audio/Sounds/bg.wav" media-type="audio/wav"/>
+      
+      <!-- Images -->
+      <item id="supervised-img" href="Images/supervised_learning.jpg" media-type="image/jpeg"/>
+      <item id="unsupervised-img" href="Images/unsupervised_learning.jpg" media-type="image/jpeg"/>
+      <item id="reinforcement-img" href="Images/reinforcement_learning.jpg" media-type="image/jpeg"/>
+      <item id="deep-learning-img" href="Images/deep_learning.jpg" media-type="image/jpeg"/>
+      <item id="apple-img" href="Images/apple.jpg" media-type="image/jpeg"/>
+      <item id="shoes1-img" href="Images/shoes1.png" media-type="image/png"/>
+      <item id="shoes2-img" href="Images/shoes2.png" media-type="image/png"/>
+      <item id="heels1-img" href="Images/heels1.png" media-type="image/png"/>
+      <item id="heels2-img" href="Images/heels2.png" media-type="image/png"/>
+      <item id="slippers1-img" href="Images/slippers1.png" media-type="image/png"/>
+      <item id="quiz-success1-img" href="Images/quiz_sucess1.png" media-type="image/png"/>
+      <item id="watermelon-img" href="Images/watermelon.jpg" media-type="image/jpeg"/>
+      <item id="orange-img" href="Images/orange.jpg" media-type="image/jpeg"/>
+      <item id="grape-img" href="Images/grape.jpg" media-type="image/jpeg"/>
+      <item id="banana-img" href="Images/banana.jpg" media-type="image/jpeg"/>
+      <item id="fruit-classification-img" href="Images/fruit_classification.jpg" media-type="image/jpeg"/>
+      <item id="emotion-recognition-img" href="Images/emotion_recognition.jpg" media-type="image/jpeg"/>
+      <item id="quiz-sucess-img" href="Images/quiz_sucess.png" media-type="image/png"/>
+      <item id="sandle-img" href="Images/sandle.png" media-type="image/png"/>
+      <item id="boots-img" href="Images/boots.png" media-type="image/png"/>
+      <item id="cat-img" href="Images/cat.jpg" media-type="image/jpeg"/>
+      <item id="dog-img" href="Images/dog.jpg" media-type="image/jpeg"/>
+      <item id="deeplearning-img" href="Images/deeplearning.png" media-type="image/png"/>
+      
+      <!-- Videos -->
+      <item id="deeplearning-video" href="Videos/deeplearning.mp4" media-type="video/mp4"/>
+   </manifest>
+   <spine>
+      <itemref idref="nav"/>
+      <itemref idref="toc"/>
+      <itemref idref="ai-learning2"/>
+      <itemref idref="ai-learning3"/>
+      <itemref idref="ai-learning4"/>
+      <itemref idref="ai-learning5"/>
+      <itemref idref="ai-learning6"/>
+      <itemref idref="ai-learning7"/>
+   </spine>
+</package> 

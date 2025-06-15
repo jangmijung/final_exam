@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+    <title>딥러닝 배워보기</title>
+    <link href="../Styles/style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            padding: 0;
+            max-width: 80%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        h1 {
+            max-width: 100%;
+            margin: 20px auto 0 auto;
+            box-sizing: border-box;
+        }
+        /* .intro-section 스타일 (회색 배경 유지) */
+        .intro-section {
+            max-width: 100%;
+            margin: 2px auto 30px auto;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .learning-experience {
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .navigation-buttons {
+            max-width: 100%;
+            margin: 40px auto;
+        }
+        /* .neural-network-game은 .learning-experience의 자식 요소 */
+        .neural-network-game {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .network-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Input, Hidden1, Hidden2, Output layers */
+            gap: 40px; /* Space between layers */
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        .layer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .layer-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .neuron {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            border: 2px solid #a0a0a0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            word-break: keep-all;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .neuron.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+        }
+
+        .neuron:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-image {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-result {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 20px 0;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdefb;
+            display: none;
+            width: 100%;
+        }
+
+        .prediction-result.show {
+            display: block;
+        }
+
+        .reset-btn {
+            padding: 10px 25px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.2s ease;
+        }
+
+        .reset-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .game-instructions {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+            text-align: left;
+        }
+
+        .game-instructions h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .game-instructions ul {
+            margin: 0;
+            padding-left: 25px;
+            list-style-type: disc;
+        }
+
+        .game-instructions li {
+            margin: 8px 0;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .network-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .layer {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .neuron {
+                width: 60px;
+                height: 60px;
+                font-size: 0.8em;
+            }
+
+            .input-image {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .neuron {
+                width: 50px;
+                height: 50px;
+                font-size: 0.75em;
+                padding: 3px;
+            }
+
+            .input-image {
+                width: 80px;
+                height: 80px;
+                font-size: 2em;
+            }
+
+            .prediction-result {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+
+        .question-examples {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+        .question-examples h2 {
+            font-size: 1.15em;
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .question-examples ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .question-examples li {
+            margin-bottom: 12px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .question-examples strong {
+            color: #0d47a1;
+        }
+        .show-answer-btn {
+            margin-top: 8px;
+            padding: 4px 14px;
+            font-size: 0.95em;
+            background-color: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .show-answer-btn:active {
+            background-color: #0d47a1;
+        }
+        .hidden-answer {
+            margin-left: 8px;
+            color: #333;
+        }
+        .answer-bold {
+            font-weight: bold;
+        }
+        .learning-goals {
+            background-color: #f5f5f5;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            margin: 30px 0 20px 0;
+            border-radius: 8px;
+        }
+        .learning-goals h2 {
+            font-size: 1.15em;
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .learning-goals ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .learning-goals li {
+            margin-bottom: 12px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        
+        .video-container {
+            max-width: 80%;
+            margin: 0 auto 20px auto;
+            text-align: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .example-section {
+            max-width: 100%;
+            margin: 30px auto;
+        }
+
+        .learning-tip {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 10%;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <a href="ai_learning2.xhtml" class="home-button">홈으로</a>
+    <h1>딥러닝 체험하기</h1>
+    
+    <section class="intro-section">
+        <p class="intro-text">이 페이지에서는 딥러닝의 원리를 쉽고 재미있게 알아볼 수 있습니다. 
+        사람의 뇌를 닮은 신경망 구조를 통해, AI가 어떻게 복잡한 문제를 스스로 판단하고 예측하는지 이해해보세요!</p>
+    </section>
+
+    <div class="video-container">
+        <video controls="controls">
+            <source src="../Videos/deeplearning.mp4" type="video/mp4" />
+            죄송합니다. 귀하의 브라우저는 비디오 태그를 지원하지 않습니다.
+        </video>
+    </div>
+
+    <section class="example-section bordered-section">
+        <h2>예시 주제: "딥러닝은 어떻게 강아지를 알아볼까?"</h2>
+        <div class="activity-concept">
+            <h3>🧠 활동 개념</h3>
+            <p>딥러닝은 사람의 뇌처럼 생각하는 신경망 구조를 따라 정보를 분석합니다. 여러 단계(층)를 거치며 점점 더 복잡한 특징을 알아보고, 마지막에는 "이건 강아지야!"라고 판단합니다.</p>
+            
+            <div style="text-align:center; margin:20px 0;">
+                <img src="../Images/deeplearning.png" alt="딥러닝 신경망 예시" style="max-width:80%; height:auto; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.1);"/>
+            </div>
+
+            <h3>🧠 딥러닝 신경망 구조와 각 층의 역할</h3>
+            <table class="network-role-table" style="width:90%; border-collapse:collapse; margin:20px 0; text-align:left;">
+                <thead>
+                    <tr>
+                        <th style="border:1px solid #ddd; padding:10px; background-color:#f2f2f2; text-align:center;">구분</th>
+                        <th style="border:1px solid #ddd; padding:10px; background-color:#f2f2f2; text-align:center;">하는 일</th>
+                        <th style="border:1px solid #ddd; padding:10px; background-color:#f2f2f2; text-align:center;">설명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #ddd; padding:10px;">입력층</td>
+                        <td style="border:1px solid #ddd; padding:10px;">이미지 입력</td>
+                        <td style="border:1px solid #ddd; padding:10px;">사용자가 선택한 강아지 이미지를 AI가 처음 받아들이는 단계입니다.</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ddd; padding:10px;">은닉층 1</td>
+                        <td style="border:1px solid #ddd; padding:10px;">기본 특징 분석 (형태)</td>
+                        <td style="border:1px solid #ddd; padding:10px;">귀, 눈, 다리 같은 겉모양을 살펴보며 "동물처럼 생겼는지" 분석해요.</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ddd; padding:10px;">은닉층 2</td>
+                        <td style="border:1px solid #ddd; padding:10px;">세부 특징 판단 (패턴 학습)</td>
+                        <td style="border:1px solid #ddd; padding:10px;">귀 모양, 발바닥, 눈 위치 등 강아지의 특징을 학습해 구별해요.</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ddd; padding:10px;">출력층</td>
+                        <td style="border:1px solid #ddd; padding:10px;">최종 판단 출력</td>
+                        <td style="border:1px solid #ddd; padding:10px;">"이건 강아지야!"라고 최종적으로 판단해서 결과를 보여줘요.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="learning-experience">
+        <div class="learning-type deep-learning">
+            <h2>🟦 딥러닝 (뇌를 닮은 AI!)</h2>
+            <p class="type-description">딥러닝은 사람의 뇌를 본떠 만든 인공신경망을 여러 층으로 쌓아 
+            복잡한 패턴을 학습하는 기술입니다. 마치 우리가 경험을 통해 배우는 것처럼, AI도 데이터를 통해 학습합니다.</p>
+
+            <div class="activity-card">
+                <h3>🧠 신경망 체험하기</h3>
+                <div class="activity-content">
+                    <div class="activity-description">
+                        <h4>🎯 설명</h4>
+                        <p>간단한 신경망을 통해 이미지 인식의 원리를 체험해보세요.</p>
+                        
+                        <div class="game-instructions">
+                            <h3>활동 방법</h3>
+                            <ul>
+                                <li>**입력층 (가장 왼쪽):** 동그라미를 클릭하여 AI에게 강아지의 '특징'을 알려주세요. (색깔이 파란색으로 변해요!)</li>
+                                <li>**은닉층 1, 은닉층 2 (가운데):** 입력된 특징을 바탕으로 AI가 생각하고 분석하는 곳이에요. 자동으로 활성화됩니다.</li>
+                                <li>**출력층 (가장 오른쪽):** AI가 무엇이라고 판단했는지 최종 결과를 보여줘요. (파란색으로 변한 동그라미를 확인!)</li>
+                                <li>**예측 결과:** 신경망 아래 메시지를 통해 AI의 최종 판단을 확인해보세요.</li>
+                                <li>**다시 시작하기:** 다른 조합으로 체험하고 싶으면 버튼을 클릭하세요.</li>
+                            </ul>
+                        </div>
+
+                        <div class="neural-network-game">
+                            <div class="network-container">
+                                <div class="input-image" id="input-image">🖼️</div>
+                                <div class="network-grid" id="network-grid">
+                                    <!-- 신경망은 JavaScript로 동적 생성됩니다 -->
+                                </div>
+                                <div id="prediction-result" class="prediction-result"></div>
+                                <button id="reset-btn" class="reset-btn">다시 시작하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-examples">
+            <h2>🎯 생각해볼까요?</h2>
+            <ul>
+                <li>
+                    <strong>"여러분, 뉴런을 클릭할 때마다 결과가 어떻게 변하나요?"</strong><br />
+                    <button id="show-answer-btn1" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer1" class="hidden-answer answer-bold" style="display:none;">→ 딥러닝도 각 뉴런의 활성화 정도에 따라 결과가 달라져요.</span>
+                </li>
+                <li>
+                    <strong>"은닉층의 뉴런들은 어떤 역할을 하나요?"</strong><br />
+                    <button id="show-answer-btn2" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer2" class="hidden-answer answer-bold" style="display:none;">→ 복잡한 패턴을 찾아내고 학습하는 역할을 해요.</span>
+                </li>
+                <li>
+                    <strong>"왜 여러 층의 뉴런이 필요한가요?"</strong><br />
+                    <button id="show-answer-btn3" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer3" class="hidden-answer answer-bold" style="display:none;">→ 단순한 특징부터 복잡한 패턴까지 단계적으로 학습하기 위해서예요.</span>
+                </li>
+            </ul>
+        </div>
+
+        <section class="learning-tip">
+            <h2>📌 TIP</h2>
+            <div class="tip-content">
+                <p>"딥러닝은 우리 뇌의 학습 방식을 본떠 만든 AI의 학습 방법이에요!"</p>
+                <ul>
+                    <li>여러 층의 뉴런이 서로 연결되어 복잡한 패턴을 학습해요.</li>
+                    <li>많은 데이터를 통해 스스로 학습하는 능력을 가져요.</li>
+                    <li>이미지 인식, 음성 인식, 자연어 처리 등 다양한 분야에서 활용돼요.</li>
+                </ul>
+            </div>
+        </section>
+    </section>
+
+    <div class="navigation-buttons" style="display:flex; justify-content:space-between;">
+        <a href="ai_learning5.xhtml" style="display:inline-block; padding:12px 32px; background:#95a5a6; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;"> &#8592;이전</a>
+        <a href="ai_learning7.xhtml" style="display:inline-block; padding:12px 32px; background:#3498db; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;">다음 &#8594;</a>
+    </div>
+
+    <script>
+        //<![CDATA[
+        document.addEventListener('DOMContentLoaded', function() {
+            // 성공 효과음 추가
+            const successSound = new Audio('../Audio/Sounds/perfect.wav');
+            successSound.volume = 0.7;
+
+            // 신경망 구조 설정
+            const networkConfig = {
+                inputLayer: 4,    // 입력층 뉴런 수
+                hiddenLayer1: 3,  // 첫 번째 은닉층 뉴런 수
+                hiddenLayer2: 2,  // 두 번째 은닉층 뉴런 수
+                outputLayer: 2    // 출력층 뉴런 수
+            };
+
+            // 신경망 상태
+            let networkState = {
+                inputNeurons: new Array(networkConfig.inputLayer).fill(false),
+                hiddenNeurons1: new Array(networkConfig.hiddenLayer1).fill(false),
+                hiddenNeurons2: new Array(networkConfig.hiddenLayer2).fill(false),
+                outputNeurons: new Array(networkConfig.outputLayer).fill(false)
+            };
+
+            // 신경망 그리드 생성
+            function createNetworkGrid() {
+                const grid = document.getElementById('network-grid');
+                grid.innerHTML = '';
+
+                // 입력층
+                const inputLayer = document.createElement('div');
+                inputLayer.className = 'layer';
+                inputLayer.innerHTML = '<div class="layer-label">입력층</div>';
+                for (let i = 0; i < networkConfig.inputLayer; i++) {
+                    const neuron = document.createElement('div');
+                    neuron.className = 'neuron';
+                    neuron.textContent = `특징 ${i + 1}`;
+                    neuron.dataset.layer = 'input';
+                    neuron.dataset.index = i;
+                    neuron.addEventListener('click', () => toggleNeuron('input', i));
+                    inputLayer.appendChild(neuron);
+                }
+                grid.appendChild(inputLayer);
+
+                // 첫 번째 은닉층
+                const hiddenLayer1 = document.createElement('div');
+                hiddenLayer1.className = 'layer';
+                hiddenLayer1.innerHTML = '<div class="layer-label">은닉층 1</div>';
+                for (let i = 0; i < networkConfig.hiddenLayer1; i++) {
+                    const neuron = document.createElement('div');
+                    neuron.className = 'neuron';
+                    neuron.textContent = `은닉 1-${i + 1}`;
+                    neuron.dataset.layer = 'hidden1';
+                    neuron.dataset.index = i;
+                    hiddenLayer1.appendChild(neuron);
+                }
+                grid.appendChild(hiddenLayer1);
+
+                // 두 번째 은닉층
+                const hiddenLayer2 = document.createElement('div');
+                hiddenLayer2.className = 'layer';
+                hiddenLayer2.innerHTML = '<div class="layer-label">은닉층 2</div>';
+                for (let i = 0; i < networkConfig.hiddenLayer2; i++) {
+                    const neuron = document.createElement('div');
+                    neuron.className = 'neuron';
+                    neuron.textContent = `은닉 2-${i + 1}`;
+                    neuron.dataset.layer = 'hidden2';
+                    neuron.dataset.index = i;
+                    hiddenLayer2.appendChild(neuron);
+                }
+                grid.appendChild(hiddenLayer2);
+
+                // 출력층
+                const outputLayer = document.createElement('div');
+                outputLayer.className = 'layer';
+                outputLayer.innerHTML = '<div class="layer-label">출력층</div>';
+                for (let i = 0; i < networkConfig.outputLayer; i++) {
+                    const neuron = document.createElement('div');
+                    neuron.className = 'neuron';
+                    neuron.textContent = i === 0 ? '강아지' : '고양이'; /* 예시: 강아지와 고양이 분류 */
+                    neuron.dataset.layer = 'output';
+                    neuron.dataset.index = i;
+                    outputLayer.appendChild(neuron);
+                }
+                grid.appendChild(outputLayer);
+            }
+
+            // 뉴런 상태 토글
+            function toggleNeuron(layer, index) {
+                if (layer === 'input') {
+                    networkState.inputNeurons[index] = !networkState.inputNeurons[index];
+                    updateNetwork();
+                }
+            }
+
+            // 신경망 상태 업데이트
+            function updateNetwork() {
+                // 입력층 뉴런 상태 업데이트
+                document.querySelectorAll('.neuron[data-layer="input"]').forEach((neuron, index) => {
+                    neuron.classList.toggle('active', networkState.inputNeurons[index]);
+                });
+
+                // 첫 번째 은닉층 뉴런 상태 계산
+                networkState.hiddenNeurons1 = networkState.hiddenNeurons1.map((_, i) => {
+                    // 특징1-3, 특징2-4, 특징1-2 조합일 때 첫 번째 은닉층 뉴런들 활성화
+                    if ((networkState.inputNeurons[0] && networkState.inputNeurons[2]) || 
+                        (networkState.inputNeurons[1] && networkState.inputNeurons[3]) ||
+                        (networkState.inputNeurons[0] && networkState.inputNeurons[1])) {
+                        return true;
+                    }
+                    return false;
+                });
+
+                // 첫 번째 은닉층 뉴런 상태 업데이트
+                document.querySelectorAll('.neuron[data-layer="hidden1"]').forEach((neuron, index) => {
+                    neuron.classList.toggle('active', networkState.hiddenNeurons1[index]);
+                });
+
+                // 두 번째 은닉층 뉴런 상태 계산
+                networkState.hiddenNeurons2 = networkState.hiddenNeurons2.map((_, i) => {
+                    // 특징1-3, 특징2-4, 특징1-2 조합일 때 두 번째 은닉층 뉴런들 활성화
+                    if ((networkState.inputNeurons[0] && networkState.inputNeurons[2]) || 
+                        (networkState.inputNeurons[1] && networkState.inputNeurons[3]) ||
+                        (networkState.inputNeurons[0] && networkState.inputNeurons[1])) {
+                        return true;
+                    }
+                    return false;
+                });
+
+                // 두 번째 은닉층 뉴런 상태 업데이트
+                document.querySelectorAll('.neuron[data-layer="hidden2"]').forEach((neuron, index) => {
+                    neuron.classList.toggle('active', networkState.hiddenNeurons2[index]);
+                });
+
+                // 출력층 뉴런 상태 계산
+                networkState.outputNeurons = networkState.outputNeurons.map((_, i) => {
+                    if (i === 0) { // '강아지' 출력 뉴런
+                        return networkState.inputNeurons[0] && networkState.inputNeurons[2];
+                    } else { // '고양이' 출력 뉴런
+                        return networkState.inputNeurons[1] && networkState.inputNeurons[3];
+                    }
+                });
+
+                // 출력층 뉴런 상태 업데이트
+                document.querySelectorAll('.neuron[data-layer="output"]').forEach((neuron, index) => {
+                    neuron.classList.toggle('active', networkState.outputNeurons[index]);
+                });
+
+                // 예측 결과 표시
+                updatePrediction();
+                updateInputImage();
+            }
+
+            // 입력 이미지 업데이트
+            function updateInputImage() {
+                const inputImageElement = document.getElementById('input-image');
+                
+                if (networkState.inputNeurons[0] && networkState.inputNeurons[2]) {
+                    inputImageElement.innerHTML = '<img src="../Images/dog.jpg" alt="강아지" style="max-width:100%; height:auto; display:block; margin:auto;" />';
+                } else if (networkState.inputNeurons[1] && networkState.inputNeurons[3]) {
+                    inputImageElement.innerHTML = '<img src="../Images/cat.jpg" alt="고양이" style="max-width:100%; height:auto; display:block; margin:auto;" />';
+                } else {
+                    inputImageElement.innerHTML = '🖼️';
+                }
+            }
+
+            // 예측 결과 업데이트
+            function updatePrediction() {
+                const predictionResult = document.getElementById('prediction-result');
+                const activeOutputNeurons = networkState.outputNeurons.filter(neuron => neuron).length;
+                
+                if (networkState.outputNeurons[0]) { // 강아지 판단
+                    predictionResult.textContent = `AI가 "강아지"라고 판단했습니다! (활성화된 뉴런: ${activeOutputNeurons}개)`;
+                    predictionResult.className = 'prediction-result show';
+                    // 성공 효과음 재생
+                    successSound.currentTime = 0;
+                    successSound.play().catch(error => console.error('Sound playback failed:', error));
+                } else if (networkState.outputNeurons[1]) { // 고양이 판단
+                    predictionResult.textContent = `AI가 "고양이"라고 판단했습니다! (활성화된 뉴런: ${activeOutputNeurons}개)`;
+                    predictionResult.className = 'prediction-result show';
+                    // 성공 효과음 재생
+                    successSound.currentTime = 0;
+                    successSound.play().catch(error => console.error('Sound playback failed:', error));
+                } else {
+                    predictionResult.textContent = "AI가 아직 판단하지 못했습니다.";
+                    predictionResult.className = 'prediction-result show';
+                }
+            }
+
+            // 게임 초기화
+            function resetGame() {
+                networkState = {
+                    inputNeurons: new Array(networkConfig.inputLayer).fill(false),
+                    hiddenNeurons1: new Array(networkConfig.hiddenLayer1).fill(false),
+                    hiddenNeurons2: new Array(networkConfig.hiddenLayer2).fill(false),
+                    outputNeurons: new Array(networkConfig.outputLayer).fill(false)
+                };
+                document.querySelectorAll('.neuron').forEach(neuron => {
+                    neuron.classList.remove('active');
+                });
+                document.getElementById('prediction-result').classList.remove('show');
+                updateInputImage(); // 이미지도 초기화
+            }
+
+            // 리셋 버튼 이벤트
+            document.getElementById('reset-btn').addEventListener('click', resetGame);
+
+            // 신경망 초기화
+            createNetworkGrid();
+            updateInputImage(); // 초기 로드 시 이미지 설정
+
+            // 답변 보기 버튼 기능
+            for (var i = 1; i <= 3; i++) {
+                var showBtn = document.getElementById('show-answer-btn' + i);
+                var answer = document.getElementById('hidden-answer' + i);
+                if (showBtn && answer) {
+                    showBtn.addEventListener('click', (function(btn, ans) {
+                        return function() {
+                            btn.style.display = 'none';
+                            ans.style.display = 'inline';
+                        };
+                    })(showBtn, answer));
+                }
+            }
+        });
+        //]]>
+    </script>
+</body>
+</html> 

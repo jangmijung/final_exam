@@ -1,0 +1,25 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+    .my_tbl {
+    width: 100%;
+    font-family: "kpd", sans-serif;
+    font-size: 0.9em;
+    border: 2px solid #333;
+    }
+    .my_tbl th, .my_tbl td {
+    padding: 0.5em;
+    border: 1px solid #666;
+    }
+    .my_tbl colgroup.col1 {
+    width: 7.5em;
+    background-color: #ddf;
+    }
+    .my_tbl th.off {
+    background-color: #eee;
+    }
+    .my_tbl img {
+    max-width: 150px;
+    height: auto;
+    }

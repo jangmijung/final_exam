@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+    <title>지도학습 체험하기</title>
+    <link href="../Styles/style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            padding: 0;
+        }
+        h1 {
+            max-width: 80%;
+            margin: 20px auto 0 auto;
+            box-sizing: border-box;
+        }
+        .intro-section {
+            max-width: 80%;
+            margin: 2px auto 30px auto;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .learning-experience {
+            max-width: 80%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .fruit-quiz {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .fruit-image {
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            margin: 20px auto;
+            display: block;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .options {
+            margin: 20px auto;
+            max-width: 300px;
+            text-align: left;
+        }
+        .option {
+            margin: 15px 0;
+            font-size: 18px;
+        }
+        .option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .option label {
+            cursor: pointer;
+        }
+        .submit-btn {
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 20px auto;
+            display: block;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .result-message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .hidden {
+            display: none;
+        }
+        .question-examples {
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            margin: 30px 0 20px 0;
+            border-radius: 8px;
+        }
+        .question-examples h2 {
+            font-size: 1.15em;
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .question-examples ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .question-examples li {
+            margin-bottom: 12px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .question-examples strong {
+            color: #0d47a1;
+        }
+        .show-answer-btn {
+            margin-top: 8px;
+            padding: 4px 14px;
+            font-size: 0.95em;
+            background-color: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .show-answer-btn:active {
+            background-color: #0d47a1;
+        }
+        .hidden-answer {
+            margin-left: 8px;
+            color: #333;
+        }
+        .answer-bold {
+            font-weight: bold;
+        }
+        .navigation-buttons {
+            max-width: 80%;
+            margin: 40px auto;
+        }
+        .learning-tip {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>지도학습 체험하기</h1>
+    
+    <section class="intro-section">
+        <p class="intro-text">이 페이지에서는 지도학습의 원리를 직접 체험해볼 수 있습니다. 
+        정답이 있는 데이터를 보고 학습하는 지도학습의 특징을 다양한 활동을 통해 이해해보세요!</p>
+    </section>
+
+    <section class="learning-experience">
+        <div class="learning-type supervised">
+            <h2>🟦 지도학습 (정답을 보고 배워요!)</h2>
+            <p class="type-description">지도학습은 정답이 있는 데이터를 보고 학습하는 방법입니다. 
+            선생님이 문제와 답을 함께 가르치는 것처럼, AI도 정답을 보고 배웁니다.</p>
+
+            <div class="activity-card">
+                <h3>📦 🃏 과일 분류 카드 게임</h3>
+                <div class="activity-content">
+                    <div class="activity-description">
+                        <h4>🍎 설명</h4>
+                        <p>아래 과일 그림을 보고 알맞은 이름을 선택하세요.</p>
+                        
+                        <div class="fruit-quiz">
+                            <div id="quiz-container">
+                                <div id="question-container">
+                                    <img id="fruit-image" class="fruit-image" src="../Images/apple.jpg" alt="과일 이미지" />
+                                    <div class="options">
+                                        <div class="option">
+                                            <input type="radio" name="fruit" id="option1" value="사과"/>
+                                            <label for="option1">사과</label>
+                                        </div>
+                                        <div class="option">
+                                            <input type="radio" name="fruit" id="option2" value="바나나"/>
+                                            <label for="option2">바나나</label>
+                                        </div>
+                                        <div class="option">
+                                            <input type="radio" name="fruit" id="option3" value="포도"/>
+                                            <label for="option3">포도</label>
+                                        </div>
+                                        <div class="option">
+                                            <input type="radio" name="fruit" id="option4" value="오렌지"/>
+                                            <label for="option4">오렌지</label>
+                                        </div>
+                                        <div class="option">
+                                            <input type="radio" name="fruit" id="option5" value="수박"/>
+                                            <label for="option5">수박</label>
+                                        </div>
+                                    </div>
+                                    <button id="submit-btn" class="submit-btn" style="display: block; margin: 20px auto;">확인</button>
+                                </div>
+                                <div id="result-container" class="hidden">
+                                    <p id="result-message" class="result-message"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="materials">
+                            <h5>🧰 게임 설명</h5>
+                            <ul>
+                                <li>과일 그림을 보고 알맞은 이름을 선택하세요.</li>
+                                <li>5개의 과일을 모두 맞추면 결과가 표시됩니다.</li>
+                                <li>정답을 확인하고 틀린 부분을 수정하면서 점점 더 똑똑해져요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-examples">
+            <h2>🎯 생각해볼까요?</h2>
+            <ul>
+                <li>
+                    <strong>"여러분, 이 과일 그림은 정답이 이미 주어져 있었죠?"</strong><br />
+                    <button id="show-answer-btn1" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer1" class="hidden-answer answer-bold" style="display:none;">→ AI는 정답(label)이 있는 데이터를 보고 배워요.</span>
+                </li>
+                <li>
+                    <strong>"정답을 보고 새로운 과일도 예측할 수 있었나요?"</strong><br />
+                    <button id="show-answer-btn2" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer2" class="hidden-answer answer-bold" style="display:none;">→ AI는 배운 정답과 비슷한 데이터를 보면 예측할 수 있어요.</span>
+                </li>
+                <li>
+                    <strong>"만약 라벨이 없었다면 AI가 이름을 맞힐 수 있었을까요?"</strong><br />
+                    <button id="show-answer-btn3" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer3" class="hidden-answer answer-bold" style="display:none;">→ 지도학습은 정답이 있어야 학습할 수 있어요.</span>
+                </li>
+            </ul>
+        </div>
+
+        <section class="learning-tip">
+            <h2>📌 TIP</h2>
+            <div class="tip-content">
+                <p>"지도학습은 정답을 보고 배우는 AI의 기본 학습 방법이에요!"</p>
+                <ul>
+                    <li>정답이 있는 데이터를 많이 보여줄수록 더 정확하게 학습해요.</li>
+                    <li>다양한 예시를 통해 학습하면 새로운 상황에도 잘 대응할 수 있어요.</li>
+                    <li>정답을 확인하고 틀린 부분을 수정하면서 점점 더 똑똑해져요.</li>
+                </ul>
+            </div>
+        </section>
+    </section>
+
+    <div class="navigation-buttons" style="display:flex; justify-content:space-between;">
+        <a href="ai_learning2.xhtml" style="display:inline-block; padding:12px 32px; background:#95a5a6; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;"> &#8592;이전</a>
+        <a href="ai_learning4.xhtml" style="display:inline-block; padding:12px 32px; background:#3498db; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;">다음 &#8594;</a>
+    </div>
+
+    <!-- JavaScript 파일 참조 -->
+    <script src="../Scripts/script.js"></script>
+    <script>
+    //<![CDATA[
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show answer buttons functionality
+        for (var i = 1; i <= 3; i++) {
+            var showBtn = document.getElementById('show-answer-btn' + i);
+            var answer = document.getElementById('hidden-answer' + i);
+            if (showBtn && answer) {
+                showBtn.addEventListener('click', (function(btn, ans) {
+                    return function() {
+                        btn.style.display = 'none';
+                        ans.style.display = 'inline';
+                    };
+                })(showBtn, answer));
+            }
+        }
+
+        // Image size standardization
+        const fruitImage = document.getElementById('fruit-image');
+        if (fruitImage) {
+            // Set fixed dimensions for all fruit images
+            fruitImage.style.width = '300px';
+            fruitImage.style.height = '300px';
+            fruitImage.style.objectFit = 'contain';
+        }
+    });
+    //]]>
+    </script>
+</body>
+</html> 

@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+    <title>비지도학습 체험하기</title>
+    <link href="../Styles/style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            padding: 0;
+            max-width: 80%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        h1 {
+            max-width: 100%;
+            margin: 20px auto 0 auto;
+            box-sizing: border-box;
+        }
+        .intro-section {
+            max-width: 100%;
+            margin: 2px auto 30px auto;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .learning-experience {
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .navigation-buttons {
+            max-width: 100%;
+            margin: 40px auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        .shoe-game {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .question-examples {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+        .learning-tip {
+            max-width: 100%;
+            margin: 30px auto 20px auto;
+            box-sizing: border-box;
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 18px 20px;
+            border-radius: 8px;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .shoes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .shoe-item {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: move;
+            background-color: #f8f9fa;
+            transition: transform 0.2s;
+        }
+
+        .shoe-item img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .shoe-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .drop-zones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .drop-zone {
+            width: 250px;
+            min-height: 250px;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .drop-zone h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .drop-zone .shoe-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+            width: 100%;
+        }
+
+        .drop-zone .shoe-item {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+
+        .drop-zone.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+
+        .drop-zone.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .drop-zone.drag-over {
+            background-color: #e9ecef;
+            border-color: #6c757d;
+        }
+
+        .drop-zone img {
+            max-width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 10px;
+            }
+
+            .shoes-container {
+                gap: 10px;
+            }
+
+            .shoe-item {
+                width: 120px;
+                height: 120px;
+            }
+
+            .drop-zone {
+                width: 200px;
+                min-height: 220px;
+            }
+            .drop-zone .shoe-item {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        .game-instructions {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .game-instructions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .game-instructions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .game-instructions li {
+            margin: 5px 0;
+        }
+
+        .result-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .result-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .result-message.fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .reset-btn {
+            display: none;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .reset-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .drop-zones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .drop-zones {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .drop-zones {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .question-examples h2 {
+            font-size: 1.15em;
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .question-examples ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .question-examples li {
+            margin-bottom: 12px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .question-examples strong {
+            color: #0d47a1;
+        }
+        .show-answer-btn {
+            margin-top: 8px;
+            padding: 4px 14px;
+            font-size: 0.95em;
+            background-color: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .show-answer-btn:active {
+            background-color: #0d47a1;
+        }
+        .hidden-answer {
+            margin-left: 8px;
+            color: #333;
+        }
+        .answer-bold {
+            font-weight: bold;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 10%;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <a href="ai_learning2.xhtml" class="home-button">홈으로</a>
+    <h1>비지도학습 체험하기</h1>
+    
+    <section class="intro-section">
+        <p class="intro-text">이 페이지에서는 비지도학습의 원리를 직접 체험해볼 수 있습니다. 
+        정답이 없는 데이터를 스스로 분류하는 비지도학습의 특징을 다양한 활동을 통해 이해해보세요!</p>
+    </section>
+
+    <section class="learning-experience">
+        <div class="learning-type unsupervised">
+            <h2>🟨 비지도학습 (스스로 분류해요!)</h2>
+            <p class="type-description">비지도학습은 정답이 없는 데이터를 스스로 분류하는 방법입니다. 
+            AI가 데이터의 특징을 스스로 찾아 비슷한 것끼리 그룹을 만듭니다.</p>
+
+            <div class="activity-card">
+                <h3>👟 신발 분류하기</h3>
+                <div class="activity-content">
+                    <div class="activity-description">
+                        <h4>🎯 설명</h4>
+                        <p>아래 신발들을 운동화, 구두, 슬리퍼로 분류해보세요.</p>
+                        
+                        <div class="game-instructions">
+                            <h3>게임 방법</h3>
+                            <ul>
+                                <li>신발 이미지를 드래그하여 알맞은 박스에 놓으세요.</li>
+                                <li>올바른 분류면 박스 색상이 초록색으로 변합니다.</li>
+                                <li>잘못된 분류면 빨간색으로 변하고 알림이 표시됩니다.</li>
+                                <li>모든 신발을 올바르게 분류하면 성공!</li>
+                                <li>틀린 분류는 다시 시도해보세요.</li>
+                            </ul>
+                        </div>
+
+                        <div class="shoe-game">
+                            <div class="game-container">
+                                <div class="shoes-container" id="shoes-container">
+                                    <div class="shoe-item" draggable="true" data-type="sneakers">
+                                        <img src="../Images/shoes1.png" alt="운동화" />
+                                    </div>
+                                    <div class="shoe-item" draggable="true" data-type="sneakers">
+                                        <img src="../Images/shoes2.png" alt="운동화" />
+                                    </div>
+                                    <div class="shoe-item" draggable="true" data-type="heels">
+                                        <img src="../Images/heels1.png" alt="구두" />
+                                    </div>
+                                    <div class="shoe-item" draggable="true" data-type="heels">
+                                        <img src="../Images/heels2.png" alt="구두" />
+                                    </div>
+                                    <div class="shoe-item" draggable="true" data-type="slippers">
+                                        <img src="../Images/slippers1.png" alt="슬리퍼" />
+                                    </div>
+                                </div>
+
+                                <div class="drop-zones">
+                                    <div class="drop-zone" data-type="sneakers">
+                                        <h3>운동화</h3>
+                                        <div class="shoe-container"></div>
+                                    </div>
+                                    <div class="drop-zone" data-type="heels">
+                                        <h3>구두</h3>
+                                        <div class="shoe-container"></div>
+                                    </div>
+                                    <div class="drop-zone" data-type="slippers">
+                                        <h3>슬리퍼</h3>
+                                        <div class="shoe-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="result-message" class="result-message"></div>
+                        <button id="reset-btn" class="reset-btn">다시 시작하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-examples">
+            <h2>🎯 생각해볼까요?</h2>
+            <ul>
+                <li>
+                    <strong>"여러분, 신발을 어떻게 나눴나요? 누가 정답을 알려주었나요?"</strong><br />
+                    <button id="show-answer-btn1" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer1" class="hidden-answer answer-bold" style="display:none;">→ AI는 정답 없이 스스로 비슷한 것끼리 분류했어요.</span>
+                </li>
+                <li>
+                    <strong>"비슷한 신발끼리 묶다 보니 자연스럽게 그룹이 만들어졌죠?"</strong><br />
+                    <button id="show-answer-btn2" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer2" class="hidden-answer answer-bold" style="display:none;">→ 비지도학습은 유사한 데이터끼리 스스로 군집을 만듭니다.</span>
+                </li>
+                <li>
+                    <strong>"여러분은 신발의 모양이나 용도를 기준으로 나눴죠?"</strong><br />
+                    <button id="show-answer-btn3" type="button" class="show-answer-btn">클릭해보세요</button>
+                    <span id="hidden-answer3" class="hidden-answer answer-bold" style="display:none;">→ AI도 그런 방식으로 데이터의 특징을 찾아 분류해요.</span>
+                </li>
+            </ul>
+        </div>
+
+        <section class="learning-tip">
+            <h2>📌 TIP</h2>
+            <div class="tip-content">
+                <p>"비지도학습은 데이터의 숨겨진 패턴을 찾아내는 AI의 창의적인 학습 방법이에요!"</p>
+                <ul>
+                    <li>데이터의 특징을 스스로 찾아 비슷한 것끼리 그룹을 만들어요.</li>
+                    <li>정답이 없어도 데이터의 패턴을 발견할 수 있어요.</li>
+                    <li>다른 분류 방법과 비교해보면 더 재미있어요.</li>
+                </ul>
+            </div>
+        </section>
+    </section>
+
+    <div class="navigation-buttons" style="display:flex; justify-content:space-between; margin-top:40px;">
+        <a href="ai_learning3.xhtml" style="display:inline-block; padding:12px 32px; background:#95a5a6; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;"> &#8592;이전</a>
+        <a href="ai_learning5.xhtml" style="display:inline-block; padding:12px 32px; background:#3498db; color:#fff; border-radius:6px; text-decoration:none; font-size:18px;">다음 &#8594;</a>
+    </div>
+
+    <script>
+        //<![CDATA[
+        document.addEventListener('DOMContentLoaded', function() {
+            const shoeItems = document.querySelectorAll('.shoe-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const resultMessage = document.getElementById('result-message');
+            const resetBtn = document.getElementById('reset-btn');
+            let draggedItem = null;
+            let correctCount = 0;
+
+            // 효과음 객체 생성
+            const sounds = {
+                perfect: new Audio('../Audio/Sounds/perfect.wav'),  // 성공 효과음
+                error: new Audio('../Audio/Sounds/error.wav')       // 실패 효과음
+            };
+
+            // 효과음 로드 확인 및 볼륨 설정
+            sounds.perfect.addEventListener('error', (e) => {
+                console.error('Perfect sound failed to load:', e);
+            });
+            sounds.perfect.volume = 0.7; // 볼륨 70%로 설정
+
+            sounds.error.addEventListener('error', (e) => {
+                console.error('Error sound failed to load:', e);
+            });
+            sounds.error.volume = 0.7; // 볼륨 70%로 설정
+
+            // 효과음 재생 함수
+            async function playSound(soundType) {
+                try {
+                    const sound = sounds[soundType];
+                    if (sound) {
+                        sound.currentTime = 0; // 재생 위치 초기화
+                        const playPromise = sound.play();
+                        if (playPromise !== undefined) {
+                            await playPromise;
+                        }
+                    }
+                } catch (error) {
+                    console.error(`${soundType} sound playback failed:`, error);
+                }
+            }
+
+            // 효과음 정지 함수
+            function stopSound(soundType) {
+                const sound = sounds[soundType];
+                if (sound) {
+                    sound.pause();
+                    sound.currentTime = 0;
+                }
+            }
+
+            // 게임 리셋 함수
+            function resetGame() {
+                // 재생 중인 효과음 정지
+                stopSound('perfect');
+                stopSound('error');
+
+                // 신발 아이템 초기화
+                const shoesContainer = document.getElementById('shoes-container');
+                shoesContainer.innerHTML = '';
+                
+                // 원래 신발 아이템들을 새로 생성하여 추가
+                const originalShoes = [
+                    { type: 'sneakers', image: '../Images/shoes1.png', alt: '운동화' },
+                    { type: 'sneakers', image: '../Images/shoes2.png', alt: '운동화' },
+                    { type: 'heels', image: '../Images/heels1.png', alt: '구두' },
+                    { type: 'heels', image: '../Images/heels2.png', alt: '구두' },
+                    { type: 'slippers', image: '../Images/slippers1.png', alt: '슬리퍼' }
+                ];
+
+                originalShoes.forEach(shoe => {
+                    const shoeItem = document.createElement('div');
+                    shoeItem.className = 'shoe-item';
+                    shoeItem.draggable = true;
+                    shoeItem.dataset.type = shoe.type;
+                    shoeItem.innerHTML = `<img src="${shoe.image}" alt="${shoe.alt}" />`;
+                    shoesContainer.appendChild(shoeItem);
+                });
+
+                // 드롭존 초기화
+                dropZones.forEach(zone => {
+                    zone.classList.remove('correct', 'incorrect', 'drag-over');
+                    // 드롭존 내용 초기화
+                    const container = zone.querySelector('.shoe-container');
+                    if (container) {
+                        container.innerHTML = '';
+                    }
+                    // 제목이 없다면 추가
+                    if (!zone.querySelector('h3')) {
+                        const title = document.createElement('h3');
+                        title.textContent = zone.dataset.type === 'sneakers' ? '운동화' : 
+                                         zone.dataset.type === 'heels' ? '구두' : '슬리퍼';
+                        zone.insertBefore(title, container);
+                    }
+                });
+
+                // 상태 초기화
+                correctCount = 0;
+                draggedItem = null;
+                
+                // 결과 메시지와 버튼 초기화
+                resultMessage.className = 'result-message';
+                resultMessage.style.display = 'none';
+                resultMessage.textContent = '';
+                resetBtn.style.display = 'none';
+
+                // 이벤트 리스너 재설정
+                initializeEventListeners();
+            }
+
+            // 이벤트 리스너 초기화 함수
+            function initializeEventListeners() {
+                const newShoeItems = document.querySelectorAll('.shoe-item');
+                
+                // 드래그 이벤트
+                newShoeItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        draggedItem = this;
+                        this.classList.add('dragging');
+                        e.dataTransfer.setData('text/plain', this.dataset.type);
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+
+                    // 터치 이벤트
+                    item.addEventListener('touchstart', function(e) {
+                        draggedItem = this;
+                        this.classList.add('dragging');
+                    }, { passive: true });
+
+                    item.addEventListener('touchend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+            }
+
+            // 초기 이벤트 리스너 설정
+            initializeEventListeners();
+
+            // 리셋 버튼 이벤트
+            resetBtn.addEventListener('click', resetGame);
+
+            // 드롭존 이벤트
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+
+                    if (!draggedItem) return;
+
+                    const shoeType = draggedItem.dataset.type;
+                    const zoneType = this.dataset.type;
+                    const container = this.querySelector('.shoe-container');
+
+                    if (shoeType === zoneType) {
+                        // 같은 타입의 신발이 이미 2개 있는지 확인
+                        const existingShoes = container.querySelectorAll('.shoe-item');
+                        if (existingShoes.length >= 2) {
+                            alert('이미 2개의 신발이 분류되어 있습니다!');
+                            return;
+                        }
+
+                        this.classList.add('correct');
+                        this.classList.remove('incorrect');
+                        correctCount++;
+                        
+                        draggedItem.style.width = '100px';
+                        draggedItem.style.height = '100px';
+                        container.appendChild(draggedItem);
+
+                        // 모든 신발이 올바르게 분류되었을 때만 성공 효과음 재생
+                        if (correctCount === 5) { // 총 5개의 신발
+                            playSound('perfect');
+                            resultMessage.textContent = '분류 성공했습니다! 🎉';
+                            resultMessage.className = 'result-message success';
+                            resultMessage.style.display = 'block';
+                            resetBtn.style.display = 'block';
+                        }
+                    } else {
+                        this.classList.add('incorrect');
+                        setTimeout(() => {
+                            this.classList.remove('incorrect');
+                        }, 1000);
+                        resultMessage.textContent = '다시 해보세요!';
+                        resultMessage.className = 'result-message fail';
+                        resultMessage.style.display = 'block';
+                        resetBtn.style.display = 'block';
+
+                        // 실패 효과음 재생
+                        playSound('error');
+                    }
+
+                    draggedItem = null;
+                });
+
+                // 터치 이벤트
+                zone.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                    if (!draggedItem) return;
+
+                    const touch = e.touches[0];
+                    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                    
+                    if (element && element.classList.contains('drop-zone')) {
+                        element.classList.add('drag-over');
+                    }
+                }, { passive: false });
+
+                zone.addEventListener('touchend', function(e) {
+                    this.classList.remove('drag-over');
+                    if (!draggedItem) return;
+
+                    const shoeType = draggedItem.dataset.type;
+                    const zoneType = this.dataset.type;
+                    const container = this.querySelector('.shoe-container');
+
+                    if (shoeType === zoneType) {
+                        // 같은 타입의 신발이 이미 2개 있는지 확인
+                        const existingShoes = container.querySelectorAll('.shoe-item');
+                        if (existingShoes.length >= 2) {
+                            alert('이미 2개의 신발이 분류되어 있습니다!');
+                            return;
+                        }
+
+                        this.classList.add('correct');
+                        this.classList.remove('incorrect');
+                        correctCount++;
+                        
+                        draggedItem.style.width = '100px';
+                        draggedItem.style.height = '100px';
+                        container.appendChild(draggedItem);
+
+                        // 모든 신발이 올바르게 분류되었을 때만 성공 효과음 재생
+                        if (correctCount === 5) { // 총 5개의 신발
+                            playSound('perfect');
+                            resultMessage.textContent = '분류 성공했습니다! 🎉';
+                            resultMessage.className = 'result-message success';
+                            resultMessage.style.display = 'block';
+                            resetBtn.style.display = 'block';
+                        }
+                    } else {
+                        this.classList.add('incorrect');
+                        setTimeout(() => {
+                            this.classList.remove('incorrect');
+                        }, 1000);
+                        resultMessage.textContent = '다시 해보세요!';
+                        resultMessage.className = 'result-message fail';
+                        resultMessage.style.display = 'block';
+                        resetBtn.style.display = 'block';
+
+                        // 실패 효과음 재생
+                        playSound('error');
+                    }
+
+                    draggedItem = null;
+                });
+            });
+
+            // 답변 보기 버튼 기능
+            for (var i = 1; i <= 3; i++) {
+                var showBtn = document.getElementById('show-answer-btn' + i);
+                var answer = document.getElementById('hidden-answer' + i);
+                if (showBtn && answer) {
+                    showBtn.addEventListener('click', (function(btn, ans) {
+                        return function() {
+                            btn.style.display = 'none';
+                            ans.style.display = 'inline';
+                        };
+                    })(showBtn, answer));
+                }
+            }
+        });
+        //]]>
+    </script>
+</body>
+</html> 
